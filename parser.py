@@ -23,16 +23,31 @@ def parse(path_to_file):
     headers = 0
     for h in maindiv.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
         #print(h.text)
-        if re.search(r'[ETC]', h.text):
+        if re.match(r'\b[ETC]', h.text):
             headers +=1
         else: 
             continue 
      #Поиск последовательностей
       
-    max = 0
+    linkslen = 1
+    for a in maindiv.find_all('a'):
+         #print('tag: ', a.name)
+         count_loc=1
+         for s in  a.find_next_siblings():
+             
+             if s.name =='a':
+                 count_loc +=1
+             else:
+                     if linkslen < count_loc:
+                         linkslen = count_loc
+                         count_loc = 1
+    
       
-    #for a in maindiv.find_all('a'):
-        #print (a.next.name)
+  
+   
+                    
+   
+                    
     
     lists = 0    
     for l in maindiv.find_all(['ul', 'ol']):
@@ -54,7 +69,7 @@ def parse(path_to_file):
     # решения на грейдере с ошибкой UnicodeDecodeError
     #imgs = None
     #headers = None
-    linkslen = None
+    #linkslen = None
     
     
     print([imgs, headers, linkslen, lists])
@@ -76,5 +91,5 @@ class TestParse(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    parse('wiki/Stone_Age')
-    #unittest.main()
+    parse('wiki/Brain')
+    unittest.main()
