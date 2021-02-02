@@ -27,9 +27,26 @@ def parse(path_to_file):
             headers +=1
         else: 
             continue 
-        
+     #Поиск последовательностей
+      
+    max = 0
+      
+    #for a in maindiv.find_all('a'):
+        #print (a.next.name)
     
-    
+    lists = 0    
+    for l in maindiv.find_all(['ul', 'ol']):
+        li_test = True
+        for parent in l.parents:
+            if parent.name in ['ul', 'ol']:
+                li_test = False
+                break
+
+        if li_test: lists +=1
+      
+          
+      
+      #Поиск      
     # Поместите ваш код здесь.
     # ВАЖНО!!!
     # При открытии файла, добавьте в функцию open необязательный параметр
@@ -38,7 +55,7 @@ def parse(path_to_file):
     #imgs = None
     #headers = None
     linkslen = None
-    lists = None
+    
     
     print([imgs, headers, linkslen, lists])
     return [imgs, headers, linkslen, lists]
