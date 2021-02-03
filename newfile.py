@@ -27,25 +27,36 @@ def parse(path_to_file):
     print(maindiv.prettyfy)   
 
 def build_bridge(path, start_page, end_page):
+    
     graf = {}
+    files = os.listdir(path)
+    
+    for file in files[0:3]:
+        f = open (''.join([path, file]))
+        html = f.read()
+        f.close
+        graf[file] = getlinks(html)
+        
+        
+    print(graf)
+        
      
     """возвращает список страниц, по которым можно перейти по ссылкам со start_page на
     end_page, начальная и конечная страницы включаются в результирующий список"""
 
     # напишите вашу реализацию логики по вычисления кратчайшего пути здесь
 
-def getlinks(page):
+def getlinks(html):
     link_list = []
-    html = open(page, encoding = 'utf-8').read()
     soup = BeautifulSoup(html, 'lxml')
     for a in soup.find_all('a', href = True ):
         if re.match(r"/wiki", a['href']):
             if os.path.exists(a['href'][1:]):
-                link_list.append(a['href'][1:])
+                link_list.append(a['href'][6:])
     
     #print(link_list)                    
-    return(page,  link_list)
-    )
+    return(link_list)
+    
     
 
 def get_statistics(path, start_page, end_page):
@@ -59,4 +70,4 @@ def get_statistics(path, start_page, end_page):
     return statistic
              
              
-getlinks('wiki/Artificial_intelligence')
+build_bridge('wiki/', 'Stone_Age', 'Python_(programming_language)')
